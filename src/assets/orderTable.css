@@ -1,0 +1,253 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f3f3f3;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+.container {
+    width: 85%;
+    margin: 40px auto;
+    padding: 30px;
+    background: #fff;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    bottom: 35px;
+}
+
+.container1 {
+    width: 85%;
+    margin: 40px auto;
+    padding: 30px;
+    background: #fff;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    bottom: 58px;
+}
+
+.display{
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    right: 22px;
+}
+
+.display1{
+    display: flex;
+    flex-direction: column;
+}
+
+.filter {
+    width: 10px;
+    margin-right: 0px;
+
+}
+
+.table-title {
+    font-size: 26px;
+    text-align: right;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background: linear-gradient(90deg, #1a3766, #ff66b2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+    left: 257px;
+    bottom: 15px;
+    width: 604px;
+}
+
+.table-title1 {
+    font-size: 26px;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 0px;
+    margin-top: 18px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background: linear-gradient(90deg, #1a3766, #ff66b2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.table1 {
+    width: 100%;
+    /*border-collapse: collapse;*/
+    margin-top: 20px;
+    position: relative;
+    right: 115px;
+}
+
+.table2 {
+    width: 100%;
+    /*border-collapse: collapse;*/
+    margin-top: 20px;
+}
+.table2 td{
+    width: 50%;
+}
+.table3{
+    display: none;
+    width: 100%;
+}
+.table3 td{width: 50%}
+.table-item {
+    width: 100%;
+    margin-top: 20px;
+}
+
+th,
+td {
+    padding: 16px;
+    text-align: left;
+    font-size: 16px;
+    border-bottom: 1px solid #ddd;
+    margin-left: 20px;
+}
+
+th {
+    background: #1a3766;
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
+    width: 236px;
+
+}
+
+td {
+    background: #f9f9f9;
+    color: #555;
+}
+
+tr:hover td {
+    background: rgba(255, 102, 178, 0.1);
+}
+
+.button {
+    padding: 10px 20px;
+    margin: 5px;
+    border: none;
+    background: #1a3766;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    width: 159px;
+}
+
+
+.button1 {
+    padding: 10px 20px;
+    margin: 5px;
+    border: none;
+    background: #1a3766;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    width: 303px;
+    position: relative;
+    top: 10px;
+}
+
+
+.button:hover {
+    opacity: 0.9;
+}
+
+.button:active {
+    opacity: 0.8;
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+        padding: 20px;
+    }
+
+    th,
+    td {
+        font-size: 14px;
+        padding: 12px;
+    }
+
+    .button {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+}
+
+#submitBtn{
+    display: none;
+}
+.table3 input{
+    border: none;
+    outline: none;
+    width: 100%;
+    background-image: linear-gradient(to right,#fff,#ff66b2);
+    color: #1a3766;
+}
+
+
+/* 定义淡入动画 */
+@keyframes fadeIn {
+    from {
+        opacity: 0; /* 初始状态：完全透明 */
+    }
+    to {
+        opacity: 1; /* 最终状态：完全不透明 */
+    }
+}
+
+/* 应用动画效果 */
+.fade-in {
+    opacity: 0; /* 初始透明度为0 */
+    animation: fadeIn 1s ease-in forwards; /* 使用淡入动画，持续1秒，缓动函数为ease-in，动画结束后保持最终状态 */
+}
+/*待改循环*/
+/*!* 第一行延迟0秒 *!*/
+/*.fade-in:nth-child(1) {*/
+/*    animation-delay: 0s;*/
+/*}*/
+
+/*!* 第二行延迟0.5秒 *!*/
+/*.fade-in:nth-child(2) {*/
+/*    animation-delay: 0.5s;*/
+/*}*/
+
+/*!* 第三行延迟1秒 *!*/
+/*.fade-in:nth-child(3) {*/
+/*    animation-delay: 1s;*/
+/*}*/
+/* 自定义提示框样式 */
+.notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #f8f9fa;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    padding: 18px 15px;
+    max-width: 300px;
+    z-index: 1050;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+    animation: fadeIn 0.5s ease-in-out forwards;
+    animation-delay: 1s;
+    transform: translateY(0); /* 初始位置 */
+}

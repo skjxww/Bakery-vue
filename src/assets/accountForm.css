@@ -1,0 +1,130 @@
+/* 基础容器样式（引用5†） */
+.container {
+    display: flex;
+    gap: 40px;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+/* 左侧用户信息面板（引用7†） */
+.user-panel {
+    width: 280px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    max-height: fit-content;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 0.75rem;
+    background: #1a3766;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s ease;
+}
+
+.submit-btn:hover {
+    background: #f78daa;
+}
+
+/* 头像样式（引用2†） */
+.avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: block;
+    margin: 0 auto 20px;
+    border: 3px solid #e9ecef;
+}
+
+/* 文字信息样式（引用5†） */
+.user-info {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.user-name {
+    font-size: 1.5rem;
+    color: #212529;
+    margin: 15px 0;
+}
+
+.user-links {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.user-links a {
+    color: #1a3766;
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.user-links a:hover {
+    background: #e9ecef;
+    transform: translateX(5px);
+}
+
+/* 右侧表单区域（引用7†） */
+.info-form {
+    flex: 1;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #495057;
+}
+
+.form-group input {
+    height: 50px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+    width: 100%;
+}
+.links {
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.link-item {
+    color: #1a3766;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+.link-item:hover {
+    color: #f78daa;
+}
+/* 响应式适配（引用5†） */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .user-panel {
+        width: 100%;
+    }
+}
