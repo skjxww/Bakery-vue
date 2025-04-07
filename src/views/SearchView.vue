@@ -1,47 +1,70 @@
 <script>
 import commonUtil from '@/api/common_util.js'
-    export default {
-  data() {
-    return {
-      mocProducts: []
-    };
-  },
-  mounted() {
-    const keyword = this.$route.query.keyword;
-    if (keyword) {
-      this.searchProducts(keyword);
-    }
-  },
-  computed: {
-    // 定义一个计算属性来获取 $route.query
-    queryParams() {
-      return this.$route.query.t;
-    }
-  },
-  watch: {
-    // 监听计算属性 queryParams 的变化
-    queryParams: {
-      handler(newQuery, oldQuery) {
-        this.searchProducts(this.$route.query.keyword);
-        console.log('Query 参数已更新:', newQuery);
-        // 在这里处理 query 参数变化后的逻辑
-      },
-      deep: true // 深度监听对象属性变化
-    }
-  },
-  methods: {
-    searchProducts(keyword) {
-      commonUtil.get(
-        '/item/search', // 根据 API 文档替换为实际搜索接口 URL
-        { keyword }, // 根据 API 文档调整参数名和结构
-        (data) => {
-          // this.products = data;
-        this.mockProducts = data;
-        },
-        (msg) => {
-            console.error(`搜索失败: ${msg}`)
+import {ref,watchEffect } from 'vue'
+import {useRoute} from "vue-router";
+import {ElMessage} from "element-plus";
+import axios from "axios";
+import common_util from "@/util/common_util";
+
+export default {
+      setup() {
+        const route = useRoute()
+        const mockProducts = ref([])
+        const isLoading = ref(false)
+        const searchError = ref(null)
+        // 统一搜索方法
+        const searchProducts = async (keyword) => {
+          try {
+            isLoading.value = true
+            searchError.value = null
+            await commonUtil.get(
+                'http://localhost:8080/item/search',
+                { keyword },
+                (data) => {
+                  mockProducts.value = data.map(item => ({
+                    ...item,
+                    image: item.image || '/default-product.png' // 图片兜底
+                  }))
+
+                },
+                (msg) => {
+                  searchError.value = `搜索失败: ${msg}`
+                  ElMessage.error(searchError.value)
+                }
+            )
+          } finally {
+            isLoading.value = false
+          }
         }
-      );
+
+        // 自动响应路由变化
+        watchEffect(() => {
+          if (route.query.keyword) {
+            searchProducts(route.query.keyword)
+          }
+        })
+
+        return { mockProducts, isLoading, searchError }
+      },
+  methods: {
+    addToCart(itemId) {
+      axios.post(
+          `http://localhost:8080/cart/items/${itemId}`,
+          {},
+          {headers: common_util.accessHeader(),params:{quantity:1}}
+      ).then(({data})=>{
+        if(data.status===0)
+        {ElMessage({message:"成功添加商品",type:"success"});}
+      })
+    },
+    goToReviewPage(itemId) {
+      console.log("itemId",itemId);
+
+      debugger
+      this.$router.push({
+        path: '/review',
+        query: {itemId}
+      })
     }
   }
 };
@@ -50,8 +73,8 @@ import commonUtil from '@/api/common_util.js'
 
 <template>
     <div class="product-item-list">
-      <div 
-      v-for="item in mockProducts" 
+      <div
+      v-for="item in mockProducts"
       :key="item.itemId"
       class="product-item-container"
     >
@@ -66,13 +89,14 @@ import commonUtil from '@/api/common_util.js'
     <div class="stock">Stock:{{ item.stock }}</div>
     <div class="description">Description:{{ item.description }}</div>
     <div class="action-buttons">
-      <a href="#">
+      <div @click="goToReviewPage(item.itemId)" class="action-buttons">
         <button class="modify-btn">COMMENTS</button>
-      </a>
+        <button class="modify-btn" @click.stop="addToCart(item.itemId)">ADD</button>
+      </div>
     </div>
   </div>
       </div>
-    </div> 
+    </div>
 </template>
 
 <style scoped>

@@ -55,7 +55,7 @@ const handleClose = () => {
 const handleSubmit = () => {
 
   common_util.internalPost(
-      `/accounts/${props.userId}/avatar`,
+      `http://localhost:8080/accounts/${props.userId}/avatar`,
       {file:formData.value.imageFile},
       common_util.moreHeader('multipart/form-data'),
       {},

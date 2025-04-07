@@ -1,5 +1,4 @@
 <script setup >
-import "@/assets/loginForm.css"
 import { ref} from "vue";
 import {useRouter} from "vue-router";
 import common_util from "@/util/common_util.js";
@@ -11,8 +10,8 @@ import {ElInput} from "element-plus"
 const router = useRouter();
 
   const user=ref({
-    email: "491825969@qq.com",
-    password: "Jj2ee"
+    email: "491832169@qq.com",
+    password: "J2EEe"
   })
   // rules
   const rules={
@@ -34,7 +33,7 @@ const router = useRouter();
           (data)=>{
             common_util.storeAccessToken(data.token)
             ElMessage({message:"登录成功",type:"success"})
-            router.replace({path:"/account/edit"})
+            router.replace({path:"/category"})
           },
           // eslint-disable-next-line @typescript-eslint/no-empty-function
           ()=>{
@@ -86,5 +85,77 @@ const router = useRouter();
 </template>
 
 <style scoped>
+/* 整体容器样式 */
+.accountContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding-top: 100px;
+}
 
+/* 表单卡片样式 */
+.form-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+
+/* 表单输入框样式 */
+.form-input {
+  height: 50px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+/* 表单输入框聚焦样式 */
+.form-input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* 提交按钮样式 */
+.submit-btn {
+  width: 100%;
+  padding: 0.75rem;
+  background: #1a3766;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s ease;
+}
+
+/* 提交按钮悬停样式 */
+.submit-btn:hover {
+  background: #f78daa;
+}
+
+/* 链接组样式 */
+.links {
+  margin-top: 1.5rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+/* 链接项样式 */
+.link-item {
+  color: #007bff;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.3s ease;
+}
+
+/* 链接项悬停样式 */
+.link-item:hover {
+  color: #0056b3;
+}
 </style>

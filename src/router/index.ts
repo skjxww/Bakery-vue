@@ -39,8 +39,15 @@ const routes: Array<RouteRecordRaw> = [
     component: SearchView
   },
   {
+    path:'/cart',
+    name:'Cart',
+    component:()=>import('@/components/cartForm.vue'),
+    meta:{isAuth:true}
+  },
+  {
     path: `/order/:orderId`,
-    component:()=>import('@/components/order/ViewOrderView.vue')
+    component:()=>import('@/components/order/ViewOrderView.vue'),
+    meta:{isAuth:true}
   },
   //   github认证后的欢迎界面,可以去设置跳转到主页【现在是跳转到edit界面】
   {
@@ -65,6 +72,11 @@ const routes: Array<RouteRecordRaw> = [
         component:()=>import('@/components/order/ListOrdersView.vue')
       }
     ]
+  },
+  {
+    path:'/checkOut',
+    name:"checkOut",
+    component:()=>import('@/components/order/NewOrderFormView.vue'),
   },
   {
     path: '/welcome',
@@ -99,7 +111,8 @@ router.beforeEach((to, from, next) => {
     if (sessionStorage.getItem('Authorization')) {
       next()  //放行
     } else {
-      alert('抱歉，您无权限查看！')
+      alert('请先登录')
+      next({name: 'welcome-login'})
     }
   }
   next()

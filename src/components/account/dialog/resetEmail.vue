@@ -41,7 +41,7 @@ const handleClose = () => {
 
 // 处理提交表单
 const handleSubmit = () => {
-  common_util.post(`/accounts/${props.userId}/email`,
+  common_util.post(`http://localhost:8080/accounts/${props.userId}/email`,
       {},
       {newEmail:formData.value.newEmail},
       // eslint-disable-next-line @typescript-eslint/no-empty-function

@@ -1,12 +1,5 @@
 import axios from 'axios'
-const http = axios.create({
-    timeout: 1000 * 86400,
-    withCredentials: true,
-    baseURL: 'http://localhost:8080',
-    // headers: {
-    //     'Content-Type': 'application/json; charset=utf-8'
-    // }
-})
+const http = axios.create()
 
 
 var _commen_util={

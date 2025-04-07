@@ -1,5 +1,8 @@
 <script>
 import commonUtil from '@/api/common_util.js'
+import axios from "axios";
+import common_util from "@/util/common_util";
+import {ElMessage} from "element-plus";
 
 export default {
   data() {
@@ -14,9 +17,19 @@ export default {
     } 
   },
   methods: {
+    addToCart(itemId) {
+      axios.post(
+          `http://localhost:8080/cart/items/${itemId}`,
+          {},
+          {headers: common_util.accessHeader(),params:{quantity:1}}
+      ).then(({data})=>{
+        if(data.status===0)
+        {ElMessage({message:"成功添加商品",type:"success"});}
+      })
+    },
     fetchProducts(categoryId) {
       commonUtil.get(
-        `/product/products/${categoryId}`, 
+        `http://localhost:8080/product/products/${categoryId}`,
         null,
         (data) => {
           this.products = data

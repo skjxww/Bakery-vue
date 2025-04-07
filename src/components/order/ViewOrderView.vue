@@ -59,7 +59,7 @@
         </td>
       </tr>
       <tr>
-        <td colspan="2">
+
           <table>
             <thead>
               <tr>
@@ -86,7 +86,6 @@
             </tr>
             </tfoot>
           </table>
-        </td>
       </tr>
     </table>
   </div>

@@ -1,5 +1,8 @@
 <script>
 import commonUtil from '@/api/common_util.js';
+import {ElMessage} from "element-plus";
+import axios from "axios";
+import common_util from "@/util/common_util";
 export default {
     data() {
         return {
@@ -21,9 +24,19 @@ export default {
     //     }]
     },
     methods: {
+      addToCart(itemId) {
+        axios.post(
+            `http://localhost:8080/cart/items/${itemId}`,
+            {},
+            {headers: common_util.accessHeader(),params:{quantity:1}}
+      ).then(({data})=>{
+        if(data.status===0)
+        {ElMessage({message:"成功添加商品",type:"success"});}
+        })
+      },
         fetchItemDetail(itemId) {
             commonUtil.get(
-                `/item/${itemId}`, 
+                `http://localhost:8080/item/${itemId}`,
                 null,
                 (data) => {
                     this.item = data;
@@ -61,11 +74,13 @@ export default {
             <div class="stock">Stock:{{ item.stock }}</div>
             <div class="description">Description:{{ item.description }}</div>
             <div @click="goToReviewPage(item.itemId)" class="action-buttons">
-                <button class="modify-btn">COMMENTS</button>
+               <button class="modify-btn">COMMENTS</button>
+              <button class="modify-btn" @click.stop="addToCart(item.itemId)">ADD</button>
             </div>
         </div>
     </div>
 </div>
+
 </template>
 
 <style scoped>

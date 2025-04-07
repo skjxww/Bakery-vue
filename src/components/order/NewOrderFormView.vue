@@ -1,46 +1,63 @@
 <script>
 import common_util from "@/util/common_util.js";
-import { ElMessage } from "element-plus";
-
+import { ElMessage} from "element-plus";
 import router from "@/router";
+import axios from "axios";
+import {ref} from 'vue'
 export default {
   data() {
     return {
-      order: {
-        orderId: "",
-        orderDate:"",
-        shippingAddress: {
-          firstName: "",
-          lastName: "",
-          shippingAddress1: "",
-          shippingAddress2: "",
-          city: "",
-          phone:""
-        },
-        grandTotal: "1",
-        items:
-          [{
-            itemId:"1",
-            quantity: "",
-            totalPrice: ""
-          }
-          ,{
-            itemId:"2",
-            quantity: "",
-            totalPrice: ""
-          }
-          ]
-
-      },
       detailFeedback: "",
-      shipToDifferentAddress: false,
       isSubmitting: false,
     };
   },
+  setup(){
+    const order=ref({
+      orderId: "",
+      orderDate:"",
+      firstName: "first_name",
+      lastName: "last_name",
+      shippingAddress1: "address1",
+      shippingAddress2: "address2",
+      city: "city1",
+      phone:"phone",
+      grandTotal: ""
+    })
+
+    axios.get("http://localhost:8080/orders/prepare",
+        {
+          headers:common_util.accessHeader()
+        }
+    ).then(({data})=>{
+      if(data.status === 0){
+        Object.assign(order.value, data.data);
+        order.value.grandTotal = data.data.subTotal;
+      }else{
+        console.log(data.status);
+      }
+    })
+    const submit=async function handleSubmit() {
+      this.isSubmitting = true;
+      console.log(order.value);
+      axios.post("http://localhost:8080/orders",
+          order.value,
+          {
+            headers:common_util.accessHeader()
+          }
+      ).then(({data})=>{
+            if(data.status === 0){
+              ElMessage({message:"提交订单成功",type:"success"});
+              router.push({path:`order/${data.data.orderId}`});
+            }else{
+              console.log(data.status);
+            }
+          }
+      );
+    }
+    return {order,submit}
+  },
   methods: {
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    setup(){
-    },
+
     validateExpiryDate() {
       // 有效期验证逻辑
       if (
@@ -53,40 +70,11 @@ export default {
       }
     },
     handleContinue() {
+      this.handleSubmit()
       // 简单跳转
       router.push("/viewOrder");
     },
-    async handleSubmit() {
-      // 表单提交处理
-      this.isSubmitting = true;
-      try {
-        const orderData = {
-          ...this.order,
-          ...(this.shipToDifferentAddress ? this.shippingInfo : {}),
-        };
-        // 这里替换为实际的API调用
-        common_util.post(
-    "/orders",
-   orderData,
-    {
-    },
-    () => {
-      ElMessage({ message: "提交成功", type: "success" });
-      router.replace({ path: "/account/edit" });
-    },
-    () => {
-      ElMessage({ message: "提交失败", type: "warning" });
-    }
-  );
-        // 提交成功后跳转
-        router.push({path:"/welcome/login",query:{order:this.order}});
-      } catch (error) {
-        console.error("Order submission failed:", error);
-        this.detailFeedback = "Failed to submit order. Please try again.";
-      } finally {
-        this.isSubmitting = false;
-      }
-    },
+
   },
 };
 </script>
@@ -102,7 +90,7 @@ export default {
             First Name:
           </td>
             <td>
-              <input type="text" v-model="order.shippingAddress.firstName" required />
+              <input type="text" v-model="order.firstName" required />
             </td>
 
         </tr>
@@ -111,7 +99,7 @@ export default {
             Last Name:
           </td>
             <td>
-              <input type="text" v-model="order.shippingAddress.lastName" required />
+              <input type="text" v-model="order.lastName" required />
             </td>
 
         </tr>
@@ -128,19 +116,19 @@ export default {
         <tr>
           <td>ShippingAddress 1:</td>
           <td>
-            <input type="text" v-model="order.shippingAddress.shippingAddress1" required />
+            <input type="text" v-model="order.shippingAddress1" required />
           </td>
         </tr>
         <tr>
           <td>ShippingAddress 2:</td>
           <td>
-            <input type="text" v-model="order.shippingAddress.shippingAddress2" />
+            <input type="text" v-model="order.shippingAddress2" />
           </td>
         </tr>
         <tr>
           <td>City:</td>
           <td>
-            <input type="text" v-model="order.shippingAddress.city" required />
+            <input type="text" v-model="order.city" required />
           </td>
         </tr>
         <tr>
@@ -154,11 +142,11 @@ export default {
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="item in order.items" v-bind:key="item.itemId">
+                <tr v-for="item in order.orderItems" v-bind:key="item.itemId">
                   <td>
-                    <router-link :to="'/item/' + item.itemId">{{
-                      item.itemId
-                    }}</router-link>
+                    <router-link :to="{ name: 'itemDetail', params: { itemId: item.itemId } }">
+                      {{ item.itemId }}
+                    </router-link>
                   </td>
                   <td>{{ item.quantity }}</td>
                   <td>{{ item.totalPrice }}</td>
@@ -167,7 +155,7 @@ export default {
               <tfoot>
                 <tr>
                   <th>Grand Total:</th>
-                  <th>{{ order.grandTotal }}</th>
+                  <th>{{ order.subTotal }}</th>
                 </tr>
                 <tr v-for="(item, index) in order.lineItems" :key="index">
                   <td>
@@ -187,7 +175,7 @@ export default {
         value="Continue"
         id="submit"
         class="button"
-        @click="handleSubmit"
+        @click="submit"
       />
     </div>
   </div>

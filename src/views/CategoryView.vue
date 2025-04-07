@@ -12,11 +12,10 @@ export default {
   methods: {
     fetchCategories() {
       commonUtil.get(
-        '/category/categories',
-        null,  // 无查询参数
+        'http://localhost:8080/category/categories',
+        null,
         (data) => {
           console.log("111");
-          
           this.categories = data
         },
         (msg, code, url) => {

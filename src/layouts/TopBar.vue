@@ -15,8 +15,8 @@
         <img src="@/assets/logo.png" alt="Bucker" class="nav-logo">
         <ul class="nav-list">
             <li class="active"><router-link to="/category">Home</router-link></li>
-            <li ><a href="#">Account</a></li>
-            <li ><a href="#">Orders</a></li> 
+            <li ><router-link to="/account/edit">Account</router-link></li>
+            <li ><router-link to="/cart">Cart</router-link></li>
         </ul>
         <div class="nav-actions">
             <input type="text" v-model="searchKeyword" id="searchInput">

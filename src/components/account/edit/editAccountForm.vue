@@ -49,7 +49,7 @@ onMounted(
 
 <template>
   <div >
-    <form  method="post" class="form-card"  @submit.prevent="updateInfo">
+    <form  method="post" class="form-card1"  @submit.prevent="updateInfo">
       <h3 class="table-title1">User Information</h3>
 
       <div class="form-group">
@@ -60,15 +60,6 @@ onMounted(
                disabled="disabled"
                placeholder="Enter username"
                >
-      </div>
-      <div class="form-group">
-        <label>Email:</label>
-        <input v-model="sharedData.email"
-               type="text"
-               class="form-input"
-               disabled="disabled"
-               placeholder="Enter username"
-        >
       </div>
       <div class="form-group">
         <label>Username:</label>
@@ -143,5 +134,59 @@ onMounted(
 </template>
 
 <style scoped>
+.submit-btn {
+  width: 100%;
+  padding: 0.75rem;
+  background: #1a3766;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s ease;
+}
+
+.submit-btn:hover {
+  background: #f78daa;
+}
+
+/* 文字信息样式（引用5†） */
+
+.user-links a {
+  color: #1a3766;
+  text-decoration: none;
+  padding: 8px 15px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.user-links a:hover {
+  background: #e9ecef;
+  transform: translateX(5px);
+}
+
+/* 右侧表单区域（引用7†） */
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: #495057;
+}
+
+.form-group input {
+  height: 50px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+  width: 100%;
+}
+
+
+
 
 </style>

@@ -27,10 +27,16 @@ module.exports = {
             changeOrigin: true,
             secure: false,
             ws: false,
-         
-            pathRewrite: { // 在发出请求后将/api替换为''空值，这样不影响接口请求
+            pathRewrite: {
+                // 在发出请求后将/api替换为''空值，这样不影响接口请求
                 // '^/springbootsu39z': ''
             }
+        },
+        '/api':{
+            target: 'http://localhost:8080',
+            changeOrigin: true,
+            pathRewrite: {
+                '^/api':''}
         }
     },
     webSocketServer: false,  // !!!!! 关键
